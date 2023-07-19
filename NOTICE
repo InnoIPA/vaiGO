@@ -1,0 +1,67 @@
+Apache Kafka
+Copyright 2023 The Apache Software Foundation.
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+[model2xmodel_package/common/images_to_tfrec.py]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/08-tf2_flow/files/images_to_tfrec.py
+Modifications:
+- Adapting the file content to fit our application
+
+[model2xmodel_package/common/pt_compile.sh]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/09-mnist_pyt/files/compile.sh
+Modifications:
+- Modified the quantize model, arch json and nat name variable to accept a parameter from the command line, allowing users to easily provide custom values.
+
+This product includes software developed at:
+LPRNet (License Plate Recognition Network) - PyTorch Implementation
+Copyright (C) 2019 Sirius Labs
+Source: https://github.com/sirius-ai/LPRNet_Pytorch
+The LPRNet PyTorch implementation is used as a reference for developing the following portion of the code.
+
+[model2xmodel_package/common/pt_quantize.py]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/09-mnist_pyt/files/quantize.py
+Modifications:
+- Adding command-line options for easier usage and compliance with PyTorch model loading requirements.
+
+[model2xmodel_package/common/q.py]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/07-yolov4-tutorial/scripts/yolov4_graph_input_keras_fn.py
+Modifications:
+- Adding variable for quantize_yolov4.sh use.
+
+[qmodel2xmodel_package/common/uantize_yolov4.sh]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/07-yolov4-tutorial/scripts/quantize_yolov4.sh
+Modifications:
+- Added command-line parameters for input size, input channel, input node, and output node.
+
+[model2xmodel_package/common/tf2_compile.sh]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/08-tf2_flow/files/compile.sh
+Modifications:
+- Modified the ARCH_JSON variable to accept a parameter from the command line, allowing users to easily provide custom values.
+
+[model2xmodel_package/common/tf2_quzntize.py]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/08-tf2_flow/files/quantize.py
+Modifications:
+- Modified TFRecord fromat following our application.
+
+[predict_model_flow/yolo3_predictor.py]
+Copyright Owner: Xilinx Inc.
+License: Apache License 2.0
+Source: https://github.com/Xilinx/Vitis-AI-Tutorials/blob/1.4/Design_Tutorials/08-tf2_flow/files/quantize.py
+Modifications:
+- Modified TFRecord fromat following our application.
