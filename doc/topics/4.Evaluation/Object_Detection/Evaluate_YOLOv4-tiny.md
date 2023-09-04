@@ -137,22 +137,29 @@ Prerequisite:
 
   6. Evaluate mAP
       
-        Compare result.txt with gt_file to evaluate the mAP.
+        Compare result.txt with gt_file to evaluate the mAP , draw PR Curve and draw Confusion Matrix.
 
         Usage:
         > python ../evaluation.py \
             -mode detection\
             -detection_use_07_metric True \
+            -detection_metric map \
             -gt_file <ground_true.txt> \
             -result_file <models_predict_result.txt> \
             -detection_iou 0.45 \
-            -detection_thresh <thresh>
+            -detection_thresh <thresh_value> \
+            -draw_pr True \
+            -draw_cm True 
 
         Example:
         ```
-        python ../evaluation.py -mode detection -detection_use_07_metric True  -gt_file gt_list.txt -result_file h5_result.txt -detection_iou 0.45 -detection_thresh 0.5
+        python ../evaluation.py -mode detection -detection_use_07_metric True  -gt_file gt_list.txt -result_file h5_result.txt -detection_iou 0.45 -detection_thresh 0.5 -draw_pr True -draw_cm True
         ```
-      You will get the number of images, accuracy for each label and model's mAP.
+      You will get the number of images, accuracy for each label and model's mAP. You can also get PR Curve and Confusion Matrix image in the folder.
 
       <div align="center"><img width="45%" height="45%" src="../fig/example-verify-result.png"></div>
+      <br />
+      <div align="center"><img width="45%" height="45%" src="../fig/coco_pr.png"></div>
+      <br />
+      <div align="center"><img width="45%" height="45%" src="../fig/coco_cm.png"></div>
       <br />

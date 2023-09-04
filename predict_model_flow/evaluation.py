@@ -70,6 +70,8 @@ def draw_cm(true_positive, false_positive, false_negative, true_negative=0, is_s
         plt.show()
     plt.clf()
 
+ 
+
 def compute_classification_accuracy(results, gts):
     """
     Evaluate classification results
@@ -133,6 +135,7 @@ def voc_ap(rec, prec, use_07_metric=False):
 
             r_point[int(10*t)]=t
             p_point[int(10*t)]=p
+        return ap,r_point, p_point
     else:
         # correct AP calculation
         # first append sentinel values at the end
@@ -150,10 +153,10 @@ def voc_ap(rec, prec, use_07_metric=False):
         # and sum (\Delta recall) * prec
         ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
 
-    return ap, r_point, p_point
+    return ap
 
 
-def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=False):
+def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=False,pr_draw=False,cm_draw=False):
     """
     Evaluate detection results
     :param results: image_name class_label score xmin ymin xmax ymax
@@ -226,12 +229,13 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
     ap = {}
     precision = {}
     recall = {}
+    f1_score = {}
 
     total_tp = 0
     total_fp = 0
     total_fn = 0
     total_class = len(class_names)
-    total_precison_point = np.zeros(shape=11)
+    total_precision_point = np.zeros(shape=11)
 
     for class_name in class_names:
         if class_name not in class_dets.keys():
@@ -301,31 +305,48 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
         false_negative = num_positive - int(true_positive[-1])
         recall[class_name] = true_positive / float(num_positive) #  same -> true_positive / (true_positive + false_negative)
         precision[class_name] = true_positive / np.maximum(true_positive + false_positive, np.finfo(np.float64).eps)
+        f1_score = (2*(precision[class_name]*recall[class_name]))/(precision[class_name]+recall[class_name])
         print("class name: {}".format(class_name))
         print("true_positive=",int(true_positive[-1]))
         print("false_positive=",int(false_positive[-1]))
         print("false_negative=",false_negative)
+        print("f1_score=",f1_score[-1])
+        print("--------------------")
        
-        ap[class_name], r_point, p_point  = voc_ap(recall[class_name], precision[class_name], use_07_metric)
-          
+        if use_07_metric == True:
+            ap[class_name], r_point, p_point  = voc_ap(recall[class_name], precision[class_name], use_07_metric)
+            total_precision_point = total_precision_point + p_point
+
+        else:
+            ap[class_name] = voc_ap(recall[class_name], precision[class_name], use_07_metric)
+            print ('evaluate ' + str(len(image_names)) + ' images')
+
         total_tp = total_tp + int(true_positive[-1])
         total_fp = total_fp + int(false_positive[-1])
         total_fn = total_fn + false_negative
-       
-        total_precison_point = total_precison_point + p_point
-        
-        print(type(p_point))
-    
-    print ('evaluate ' + str(len(image_names)) + ' images')
 
-    print("total:")
-    print("true_positive: {}".format(total_tp))
-    print("false_positive: {}".format(total_fp))
-    print("false_negative: {}".format(total_fn))
+        total_pre = total_tp/(total_tp+total_fp)
+        total_rec = total_tp/(total_tp+total_fn)
+        total_f1_score = (2*(total_pre*total_rec))/(total_pre+total_rec)
     
-    draw_pr(r_point, total_precison_point/total_class)
-    draw_cm(total_tp, total_fp, total_fn)
+
+        
+        #print(type(p_point))
+        print ('evaluate ' + str(len(image_names)) + ' images')
+
+        print("total:")
+        print("true_positive: {}".format(total_tp))
+        print("false_positive: {}".format(total_fp))
+        print("false_negative: {}".format(total_fn))
+        print("f1_score: {}".format(total_f1_score))
+        print("====================")
+
+    if pr_draw == True:
+        draw_pr(r_point, total_precision_point/total_class)
+    if cm_draw == True:
+        draw_cm(total_tp, total_fp, total_fn)
     
+
    
     return recall, precision, ap
 
@@ -357,8 +378,12 @@ if __name__ == '__main__':
                         help="""Used when detection_metric is precision, default 0.8.""")
     parser.add_argument('-detection_fix_precision', default='0.8',
                         help="""Used when detection_metric is recall, default 0.8.""")
-    parser.add_argument('-detection_use_07_metric', default='False',
+    parser.add_argument('-detection_use_07_metric', default='True',
                         help="""Uses the VOC 07 11 point method to compute VOC AP given precision and recall.""")
+    parser.add_argument('-draw_pr', default='True',
+                        help="""Uses the VOC 07 point method to draw VOC AP precision and recall curve.""")
+    parser.add_argument('-draw_cm', default='True',
+                        help="""Uses the VOC 07 point method to draw confusion matrix.""")
 
     args = parser.parse_args()
 
@@ -383,10 +408,16 @@ if __name__ == '__main__':
         detection_thresh = float(args.detection_thresh)
         detection_iou = float(args.detection_iou)
         use_07_metric = False
+        pr_draw = False
+        cm_draw = False
         if args.detection_use_07_metric == 'True':
             use_07_metric = True
+        if args.draw_pr == 'True':
+            pr_draw = True
+        if args.draw_cm == 'True':
+            cm_draw = True
         recall, precision, ap = compute_detection_ap(results_lines, gts_lines, detection_thresh, detection_iou,
-                                                     use_07_metric)
+                                                    use_07_metric,pr_draw,cm_draw)
         if args.detection_metric == 'map':
             for class_name in ap.keys():
                 print (class_name + ' AP: ' + str(ap[class_name]))
