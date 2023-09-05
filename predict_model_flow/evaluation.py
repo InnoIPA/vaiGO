@@ -305,10 +305,10 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
         f1_score = (2*(precision[class_name]*recall[class_name]))/(precision[class_name]+recall[class_name])
         if cm_result_show:
             print("class name: {}".format(class_name))
-            print("true_positive=",int(true_positive[-1]))
-            print("false_positive=",int(false_positive[-1]))
-            print("false_negative=",false_negative)
-            print("f1_score=",f1_score[-1])
+            print("true_positive: {}".format(int(true_positive[-1])))
+            print("false_positive: {}".format(int(false_positive[-1])))
+            print("false_negative: {}".format(false_negative))
+            print("f1_score: {}".format(f1_score[-1]))
             print("--------------------")
        
         if use_07_metric:
