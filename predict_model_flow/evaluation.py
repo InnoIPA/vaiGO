@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import auc
 
 def draw_pr(recall_point, precision_point, is_show=True):
-    plt.plot(recall_point, precision_point, marker='o', linewidth = 1.5,ms=0.5)
+    plt.plot(recall_point, precision_point, marker='o', linewidth = 1.5, ms=0.5)
     plt.title('PR_curve')
     plt.xlabel('recall')
     plt.ylabel('precision')
@@ -70,8 +70,6 @@ def draw_cm(true_positive, false_positive, false_negative, true_negative=0, is_s
         plt.show()
     plt.clf()
 
- 
-
 def compute_classification_accuracy(results, gts):
     """
     Evaluate classification results
@@ -110,7 +108,6 @@ def compute_classification_accuracy(results, gts):
     print ('evaluate ' + str(count) + ' images')
     return accuracy
 
-
 def voc_ap(rec, prec, use_07_metric=False):
     """
     Compute VOC AP given precision and recall.
@@ -135,7 +132,7 @@ def voc_ap(rec, prec, use_07_metric=False):
 
             r_point[int(10*t)]=t
             p_point[int(10*t)]=p
-        return ap,r_point, p_point
+        return ap, r_point, p_point
     else:
         # correct AP calculation
         # first append sentinel values at the end
@@ -156,7 +153,7 @@ def voc_ap(rec, prec, use_07_metric=False):
     return ap
 
 
-def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=False,pr_draw=False,cm_draw=False):
+def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=False, pr_draw=False, cm_draw=False, cm_result_show=False):
     """
     Evaluate detection results
     :param results: image_name class_label score xmin ymin xmax ymax
@@ -176,13 +173,13 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
             print('wrong ground truth info: ' + gt_info[0])
             return 0
         image_name = gt_info[0]
-        print(image_name)
+        #print(image_name)
         # class_name = gt_info[1]
         class_name = gt_info[5]
-        print(class_name)
+        #print(class_name)
         # bbox = [float(item) for item in gt_info[2:6]]
         bbox = [float(item) for item in gt_info[1:5]]
-        print(bbox)
+        #print(bbox)
         if len(gt_info) == 6:
             difficult = False
         else:
@@ -306,14 +303,15 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
         recall[class_name] = true_positive / float(num_positive) #  same -> true_positive / (true_positive + false_negative)
         precision[class_name] = true_positive / np.maximum(true_positive + false_positive, np.finfo(np.float64).eps)
         f1_score = (2*(precision[class_name]*recall[class_name]))/(precision[class_name]+recall[class_name])
-        print("class name: {}".format(class_name))
-        print("true_positive=",int(true_positive[-1]))
-        print("false_positive=",int(false_positive[-1]))
-        print("false_negative=",false_negative)
-        print("f1_score=",f1_score[-1])
-        print("--------------------")
+        if cm_result_show:
+            print("class name: {}".format(class_name))
+            print("true_positive=",int(true_positive[-1]))
+            print("false_positive=",int(false_positive[-1]))
+            print("false_negative=",false_negative)
+            print("f1_score=",f1_score[-1])
+            print("--------------------")
        
-        if use_07_metric == True:
+        if use_07_metric:
             ap[class_name], r_point, p_point  = voc_ap(recall[class_name], precision[class_name], use_07_metric)
             total_precision_point = total_precision_point + p_point
 
@@ -324,32 +322,24 @@ def compute_detection_ap(results, gts, thresh, overlap_thresh, use_07_metric=Fal
         total_tp = total_tp + int(true_positive[-1])
         total_fp = total_fp + int(false_positive[-1])
         total_fn = total_fn + false_negative
-
         total_pre = total_tp/(total_tp+total_fp)
         total_rec = total_tp/(total_tp+total_fn)
         total_f1_score = (2*(total_pre*total_rec))/(total_pre+total_rec)
-    
 
-        
-        #print(type(p_point))
-        print ('evaluate ' + str(len(image_names)) + ' images')
-
-        print("total:")
-        print("true_positive: {}".format(total_tp))
-        print("false_positive: {}".format(total_fp))
-        print("false_negative: {}".format(total_fn))
-        print("f1_score: {}".format(total_f1_score))
-        print("====================")
-
-    if pr_draw == True:
+    if pr_draw:
         draw_pr(r_point, total_precision_point/total_class)
-    if cm_draw == True:
+    if cm_draw:
         draw_cm(total_tp, total_fp, total_fn)
     
-
-   
+    print("====================")
+    print("total:")
+    print('evaluate ' + str(len(image_names)) + ' images')
+    print("true_positive: {}".format(total_tp))
+    print("false_positive: {}".format(total_fp))
+    print("false_negative: {}".format(total_fn))
+    print("f1_score: {}".format(total_f1_score))
+    print("====================")
     return recall, precision, ap
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='evaluate classification or detection performance')
@@ -384,6 +374,8 @@ if __name__ == '__main__':
                         help="""Uses the VOC 07 point method to draw VOC AP precision and recall curve.""")
     parser.add_argument('-draw_cm', default='True',
                         help="""Uses the VOC 07 point method to draw confusion matrix.""")
+    parser.add_argument('-cm_result_show', default='True',
+                        help="""If you want to see each category of confusion matrix info and F1-Score.""")
 
     args = parser.parse_args()
 
@@ -399,7 +391,6 @@ if __name__ == '__main__':
         print ('ground truth file is empty!')
     if len(results_lines) < 1:
         print ('result file is empty!')
-
     if args.mode == 'classification':
         accuracy = compute_classification_accuracy(results_lines, gts_lines)
         print ('classification accuracy of each class: ' + str(accuracy))
@@ -410,14 +401,17 @@ if __name__ == '__main__':
         use_07_metric = False
         pr_draw = False
         cm_draw = False
+        cm_result_show = False
         if args.detection_use_07_metric == 'True':
             use_07_metric = True
         if args.draw_pr == 'True':
             pr_draw = True
         if args.draw_cm == 'True':
             cm_draw = True
+        if args.cm_result_show == 'True':
+            cm_result_show = True
         recall, precision, ap = compute_detection_ap(results_lines, gts_lines, detection_thresh, detection_iou,
-                                                    use_07_metric,pr_draw,cm_draw)
+                                                    use_07_metric, pr_draw, cm_draw, cm_result_show)
         if args.detection_metric == 'map':
             for class_name in ap.keys():
                 print (class_name + ' AP: ' + str(ap[class_name]))
