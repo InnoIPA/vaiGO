@@ -157,7 +157,8 @@ Prerequisite:
         ```
       You will get the number of images, accuracy for each label and model's mAP. You can also get PR Curve and Confusion Matrix image in the folder.
 
-      <div align="center"><img width="45%" height="45%" src="../fig/example-verify-result.png"></div>
+      <div align="center"><img width="45%" height="45%" src="../fig/ex-very-result.png"></div>
+      <div align="center"><img width="45%" height="45%" src="../fig/ex-very-result2.png"></div>
       <br />
       <div align="center"><img width="45%" height="45%" src="../fig/coco_pr.png"></div>
       <br />
