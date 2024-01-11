@@ -19,11 +19,12 @@
 # 	Wilson, wilson_yeh@innodisk.com, innodick Inc
 
 
-INPUT_SIZE=$1
-INPUT_CHANNEL=$2
-INPUT_NODE=$3
+INPUT_W=$1
+INPUT_H=$2
+INPUT_CHANNEL=$3
+INPUT_NODE=$4
 # INPUT_NODE="input_1"
-OUTPUT_NODE=$4
+OUTPUT_NODE=$5
 # OUTPUT_NODE="conv2d_20/BiasAdd,conv2d_23/BiasAdd"
 
 cp ../common/q.py ./
@@ -35,7 +36,7 @@ CALIB_ITER=$((count + lines))
 
 echo "find $CALIB_ITER image path"
 
-echo ${INPUT_SIZE} > model_input_size.txt
+echo "${INPUT_W} ${INPUT_H}" > model_input_size.txt
 echo ${INPUT_NODE} > model_input_node_name.txt
 
 run_quant() {
@@ -49,7 +50,7 @@ run_quant() {
 	--output_dir         ./ \
 	--input_nodes        ${INPUT_NODE} \
 	--output_nodes       ${OUTPUT_NODE} \
-	--input_shapes       ?,${INPUT_SIZE},${INPUT_SIZE},${INPUT_CHANNEL} \
+	--input_shapes       ?,${INPUT_W},${INPUT_H},${INPUT_CHANNEL} \
 	--calib_iter         ${CALIB_ITER} \
 	--gpu                0
 }
