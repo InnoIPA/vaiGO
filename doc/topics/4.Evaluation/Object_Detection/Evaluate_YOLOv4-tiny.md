@@ -48,17 +48,11 @@ Prerequisite:
          > This step is not necessary if you don't use XML.
 
          Usage:
-         >IMAGE_SOURCE=<datasets_path>  
-         >python ../txt2xml.py \
-          -img $IMAGE_SOURCE \
-          -txt $IMAGE_SOURCE \
-          -xml $IMAGE_SOURCE
+         >python ../txt2xml.py -img <path> 
 
          Example:
          ```
-         IMAGE_SOURCE=/workspace/demo_ah/tmp/7_singleUSB_gray_VST_mono8_700_700_mfg_v2i_20220408/u7_testing_data/220406_test_frame2image/
-
-         python ../txt2xml.py -img $IMAGE_SOURCE -txt $IMAGE_SOURCE -xml $IMAGE_SOURCE
+         python ../txt2xml.py -img /workspace/vaiGO/predict_model_flow/tmp_test_update/
          ```
          
          <div align="center"><img width="100%" height="100%" src="../fig/txt2xml.png"></div>
