@@ -8,8 +8,8 @@ with open(_classes, 'r') as f:
     classes = [_class for _class in f.read().splitlines()]
 
 def convert_annotation(image_id, list_file):
-    in_file = open('{}.xml'.format(image_id.split('.png')[0]))
-    # in_file = open(''%(year, image_id))
+    base_path, _ = os.path.splitext(image_id)
+    in_file = open('{}.xml'.format(base_path))
     tree=ET.parse(in_file)
     root = tree.getroot()
 

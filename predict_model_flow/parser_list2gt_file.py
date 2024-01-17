@@ -4,6 +4,7 @@
 # https://opensource.org/licenses/MIT
 
 import argparse
+import os
 
 def main():
     parser = argparse.ArgumentParser(description="Generate gt_file from parser_image_list")
@@ -18,8 +19,9 @@ def main():
         for line in _f:
             parts = line.split(' ')
             file_path = parts[0]
-            file_name = file_path[file_path.rfind('/')+1:file_path.rfind('.jpg')]
-            
+            # file_name = file_path[file_path.rfind('/')+1:file_path.rfind('.jpg')]
+            base_path, _ = os.path.splitext(file_path)
+            file_name = os.path.basename(base_path)
             for bbox_info in parts[1:]:
                 bbox_parts = bbox_info.split(',')
                 if len(bbox_parts) == 5:
