@@ -23,13 +23,13 @@ This repository is based on [Xilinx Vitis-AI](https://www.xilinx.com/products/de
 Like the following shows, the trained model can be quantize and compile to xmodel. And also deploy on FPGA. How to perform AI inference on an FPGA can be referenced in [dpu-sc](https://github.com/InnoIPA/dpu-sc). On the other hand, visit to find [EXMU-X261 usermanual](https://github.com/InnoIPA/EXMU-X261-usermanual) more FPGA information.
 
 <br />
-<div align="center"><img width="100%" height="100%" src="doc/fig/convert2depoly.png"></div>
+<div align="center"><img width="80%" height="80%" src="doc/fig/convert2depoly.png"></div>
 <br />
 
 The following chart shows the Vitis-AI Model converting flow. To evaluate model can avoid the model spawned some problems during quantize model or compile model. But evaluate model step is optional which means you can choose whether you want to evaluate model. 
 
 <br />
-<div align="center"><img width="60%" height="60%" src="doc/fig/xilinx-vitis-AI-utility-flow.png"></div>
+<div align="center"><img width="80%" height="80%" src="doc/fig/xilinx-vitis-AI-utility-flow.png"></div>
 <br />
 
 # Matters Needing Attention
