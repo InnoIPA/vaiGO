@@ -22,9 +22,7 @@ calib_image_list = 'train.txt'
 calib_batch_size = 1
 
 input_node_name = open('model_input_node_name.txt').readline().splitlines()
-custom_h = int(open('model_input_size.txt').readline())
-custom_w = int(open('model_input_size.txt').readline())
-
+image_w, image_h = open('model_input_size.txt').readline().split()
 
 #normalization factor to scale image 0-255 values to 0-1 #DB
 NORM_FACTOR = 255.0 # could be also 256.0
@@ -43,10 +41,10 @@ def calib_input(iter):
     calib_image_name = curline.strip()
     
     image = cv2.imread(calib_image_name)
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     print(image.shape)
     
-    custom_image = cv2.resize(image, (custom_h,custom_w), interpolation=cv2.INTER_NEAREST)
+    custom_image = cv2.resize(image, (int(image_w),int(image_h)), interpolation=cv2.INTER_NEAREST)
     image2 = np.array(custom_image)
     print(image2.shape)
     image2 = ScaleTo1(image2)

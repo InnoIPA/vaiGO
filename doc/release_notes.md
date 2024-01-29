@@ -39,3 +39,14 @@
 - Fix tf2_compiler.sh 
 - Delete example folder.
 - Lprnet usage.
+
+# Release 0.1.3
+## Perf 
+- Change txt2xml usage and add percentage.
+- Change some uasge. don't need to adjust image formats.
+
+## Docs
+- Update flow of converting model.
+- Add FAQ title on the top of readme.
+- Update usage.
+- Add some result images.

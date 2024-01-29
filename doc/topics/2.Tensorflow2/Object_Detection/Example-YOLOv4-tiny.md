@@ -52,19 +52,16 @@ In this section, you will learn how to convert a trained model to xmodel in a Te
 3. Change label format from .txt to .xml
    > This step is not necessary if you don't use XML.
 
-         Usage:
-         $ IMAGE_SOURCE=<datasets_path>  
-         $ python ../common/txt2xml.py \
-            -img $IMAGE_SOURCE \
-            -txt $IMAGE_SOURCE \
-            -xml $IMAGE_SOURCE
+   Usage:
+   >python ../txt2xml.py -img <path> 
 
-         Example:
-            $ IMAGE_SOURCE=/workspace/demo_ah/tmp/7_singleUSB_gray_VST_mono8_700_700_mfg_v2i_20220408/u7_testing_data/220406_test_frame2image/
-
-            $ python ../common/txt2xml.py -img $IMAGE_SOURCE -txt $IMAGE_SOURCE -xml $IMAGE_SOURCE
-   <!-- <div align="center"><img width="100%" height="100%" src="doc/pic/txt2xml.png"></div>
-   <br /> -->
+   Example:
+   ```
+   python ../txt2xml.py -img /workspace/vaiGO/predict_model_flow/tmp_test_update/
+   ```
+   
+   <div align="center"><img width="100%" height="100%" src="../fig/txt2xml.png"></div>
+   <br />
 
 4. Parse your dataset.
 
