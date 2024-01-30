@@ -50,3 +50,18 @@
 - Add FAQ title on the top of readme.
 - Update usage.
 - Add some result images.
+
+# Release 0.1.4
+## Feat
+- Analyzing model recognition ability using confusion matrix.
+
+# Release 0.1.5
+## Perf 
+- Change txt2xml usage and add percentage.
+- Change some uasge. don't need to adjust image formats.
+
+## Docs
+- Update flow of converting model.
+- Add FAQ title on the top of readme.
+- Update usage.
+- Add some result images.
