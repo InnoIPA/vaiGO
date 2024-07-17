@@ -79,12 +79,12 @@ To convert the trained model to model.pb. There are several formats for trained 
       1. Change `model.weight` and `model.config` to `.h5` first.
          
          Usage:
-         > python ../common/keras-YOLOv3-model-set/tools/model_converter/convert.py \
+         > python ../common/tf_convert_tool/convert.py \
          --yolo4_reorder <model.cfg> <model.weights> <output.h5>
    
          Example:
          ``` 
-         python ../common/keras-YOLOv3-model-set/tools/model_converter/convert.py --yolo4_reorder ./yolov4.cfg ./yolov4-best.weights ./yolov4.h5
+         python ../common/tf_convert_tool/convert.py --yolo4_reorder ./yolov4.cfg ./yolov4-best.weights ./yolov4.h5
          ```
          Example for Darknet YOLOv4 
          <div align="center"><img width="100%" height="100%" src="../fig/darknet_yolov4_h5.png"></div>
@@ -93,13 +93,13 @@ To convert the trained model to model.pb. There are several formats for trained 
       2. Change `model.h5` to `.pb`.
 
          Usage:
-         > python ../common/keras-YOLOv3-model-set/tools/model_converter/keras_to_tensorflow.py \
+         > python ../common/tf_convert_tool/keras_to_tensorflow.py \
           --input_model <output.h5> \
           --output_model=<output.pb>
 
          Example:
          ``` 
-         python ../common/keras-YOLOv3-model-set/tools/model_converter/keras_to_tensorflow.py --input_model ./yolov4.h5 --output_model=output.pb
+         python ../common/tf_convert_tool/keras_to_tensorflow.py --input_model ./yolov4.h5 --output_model=output.pb
          ```
          
          Example for Darknet YOLOv4 
