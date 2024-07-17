@@ -58,14 +58,14 @@ To convert the trained model to model.pb. There are several formats for trained 
    1. Please put the `model.h5` and `model_config.json` into <case_folder_name>.
 
       Usage:
-      > python ../common/keras-YOLOv3-model-set/tools/model_converter/keras_to_tensorflow.py \
+      > python ../common/tf_convert_tool/keras_to_tensorflow.py \
         --input_model=<model.h5> \
         --input_model_json=<model_config.json> \
         --output_model=<output.pb> 
       
       Example:
       ``` 
-      python ../common/keras-YOLOv3-model-set/tools/model_converter/keras_to_tensorflow.py --input_model=model.h5 --input_model_json=model_config.json --output_model=output.pb
+      python ../common/tf_convert_tool/keras_to_tensorflow.py --input_model=model.h5 --input_model_json=model_config.json --output_model=output.pb
       ```
       Example for tensorflow yolov4-tiny
       <div align="center"><img width="100%" height="100%" src="../fig/tf_yolov4_tiny_pb.png"></div>
