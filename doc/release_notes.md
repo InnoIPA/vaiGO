@@ -65,3 +65,10 @@
 - Add FAQ title on the top of readme.
 - Update usage.
 - Add some result images.
+
+# Release 0.1.6
+## Chore
+- Keep only the necessary tools for convert tensorflow models.
+
+## Docs
+- Fix the convert tool path.
